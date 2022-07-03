@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Commande{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<article class="container">
+			<h1 class="text-center mb-4 fw-semibold fs-1">Commander</h1>
+			{% for message in app.flashes('message') %}
+				<div class="alert alert-danger text-center">
+					{{ message }} Il reste {{ produit.stock }} {{ produit.stock > 1 ? 'articles' : 'article' }}.
+				</div>
+			{% endfor %}
+			<div class="row mb-3">
+				<div class="col-3 offset-3">
+					<img src="/upload{{ asset(produit.photo) }}" alt="" class="img-fluid img-thumbnail">
+				</div>
+				<div class="col-3">
+					<h1 class="h3">{{ produit.titre }}</h1>
+					<hr>
+					<p>{{ produit.description }}</p>
+					<p class="text-end">{{ produit.prix|deviseFr }}/unité</p>
+				</div>
+			</div>
+			{{ include('home/_form.html.twig') }}
+			<a href="{{ path('panier') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Retour</a>
+		</article>
+	</main>
+{% endblock %}

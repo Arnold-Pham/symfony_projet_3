@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<article class="container">
+			<h1 class="text-center mb-4 fw-semibold fs-2">Commande</h1>
+			<table class="table table-sm">
+				<tbody>
+					<tr>
+						<th>#</th>
+						<td>{{ commande.id }}</td>
+					</tr>
+					<tr>
+						<th># Produit</th>
+						<td>{{ commande.idProduit.id }}</td>
+					</tr>
+					<tr>
+						<th># Membre</th>
+						<td>{{ commande.idMembre.id }}</td>
+					</tr>
+					<tr>
+						<th>Quantite</th>
+						<td>{{ commande.quantite }}</td>
+					</tr>
+					<tr>
+						<th>Montant</th>
+						<td>{{ commande.montant|deviseFr }}</td>
+					</tr>
+					<tr>
+						<th>Etat</th>
+						<td>{{ commande.etat }}</td>
+					</tr>
+					<tr>
+						<th>Date Enregistrement</th>
+						<td>{{ commande.dateEnregistrement ? commande.dateEnregistrement|date('Y-m-d H:i') : '' }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<a href="{{ path('commande_index') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Retour</a>
+			<a href="{{ path('commande_edit', {'id': commande.id}) }}" class="btn btn-outline-primary btn-sm float-end mx-1">Modifier</a>
+			{{ include('commande/_delete_form.html.twig') }}
+		</article>
+	</main>
+{% endblock %}

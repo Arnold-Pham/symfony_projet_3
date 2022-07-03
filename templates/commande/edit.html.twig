@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Commande{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<article class="container">
+			<h1 class="text-center mb-4 fw-semibold fs-2">Modifier Commande</h1>
+			{{ include('commande/_form.html.twig', {'button_label': 'Update'}) }}
+			<a href="{{ path('commande_index') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Retour</a>
+			{{ include('commande/_delete_form.html.twig') }}
+		</article>
+	</main>
+{% endblock %}

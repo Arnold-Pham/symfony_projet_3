@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Commandes passés{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<h1 class="text-center mb-4 fw-semibold fs-2">Commandes passés</h1>
+		<section class="overflow-scroll">
+			<table class="table table-sm table-hover px-5">
+				<thead>
+					<tr class="table-danger text-center align-middle">
+                        <th>Date de Commande</th>
+						<th>Produit</th>
+						<th>Prix</th>
+						<th>Membre</th>
+						<th>Quantite</th>
+						<th>Montant</th>
+						<th>Etat</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for commande in commandes %}
+						<tr class="text-center align-middle">
+                            <td>{{ commande.dateEnregistrement|date('H:i - d/m/Y') }}</td>
+							<td>{{ commande.idProduit.titre }}<br>
+								<img src="/upload{{ asset(commande.idProduit.photo) }}" alt="Photo du {{ commande.idProduit.description }}" class="img-fluid img-thumbnail" style="max-height: 150px;">
+							</td>
+							<td>{{ commande.idProduit.prix|deviseFr }}</td>
+							<td>{{ commande.idMembre.pseudo }}</td>
+							<td>{{ commande.quantite }}</td>
+							<td>{{ commande.montant|deviseFr }}</td>
+							<td>{{ commande.etat }}</td>
+						</tr>
+					{% else %}
+						<tr class="text-center align-middle">
+							<td colspan="7">Panier vide</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</section>
+	</main>
+{% endblock %}

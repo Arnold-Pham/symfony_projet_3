@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<h1 class="text-center mb-4 fw-semibold fs-2">Panier</h1>
+		<section class="overflow-scroll">
+			<table class="table table-sm table-hover px-5">
+				<thead>
+					<tr class="table-danger text-center align-middle">
+						<th>Produit</th>
+						<th>Prix</th>
+						<th>Quantite</th>
+						<th>Montant</th>
+						<th>Etat</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for commande in commandes %}
+						<tr class="text-center align-middle">
+							<td>{{commande.idProduit.titre }}<br>
+								<img src="/upload{{ asset(commande.idProduit.photo) }}" alt="Photo du {{ commande.idProduit.description }}" class="img-fluid img-thumbnail" style="max-height: 150px;">
+							</td>
+							<td>{{ commande.idProduit.prix|deviseFr }}</td>
+							<td>{{ commande.quantite }}</td>
+							<td class="text-end">{{ commande.montant|deviseFr }}</td>
+							<td>{{ commande.etat }}</td>
+							<td>
+								<a href="{{ path('commande_user_del', {'id': commande.id}) }}" class="btn btn-sm btn-outline-secondary">
+									<i class="bi bi-trash3-fill"></i>
+								</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr class="text-center align-middle">
+							<td colspan="7">Panier vide</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<td colSpan="3" class="bg-secondary bg-opacity-25"></td>
+					<td colSpan="1" class="d-flex flex-wrap"><div>Total:</div><div class="ms-auto">{{ total|deviseFr }}</div></td>
+					<td colSpan="2" class="bg-secondary bg-opacity-25"></td>
+				</tfoot>
+			</table>
+			<a href="{{ path('commande_user_val') }}" class="btn btn-outline-success btn-sm float-end ms-3 px-5">Commander</a>
+		</section>
+	</main>
+{% endblock %}

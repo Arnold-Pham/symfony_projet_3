@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Membres{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<h1 class="text-center mb-4 fw-semibold fs-2">Membres</h1>
+		<div class="overflow-scroll">
+			<table class="table table-sm table-hover px-5">
+				<thead>
+					<tr class="table-danger text-center align-middle">
+						<th>Id</th>
+						<th>Civilite</th>
+						<th>Pseudo</th>
+						<th>Statut</th>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>Email</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for membre in membres %}
+						<tr class="text-center align-middle">
+							<td>{{ membre.id }}</td>
+							<td>{{ membre.civilite|civilite|raw }}</td>
+							<td>{{ membre.pseudo }}</td>
+							<td>{{ membre.statut == 1 ? 'Admin' : 'Membre' }}</td>
+							<td>{{ membre.nom }}</td>
+							<td>{{ membre.prenom }}</td>
+							<td>{{ membre.email }}</td>
+							<td>
+								{% include 'commun/action.html.twig' with {'id': membre.id, 'show': 'membre_show', 'edit': 'membre_edit', 'delete': 'membre_delete'} %}
+							</td>
+						</tr>
+					{% else %}
+						<tr class="text-center align-middle">
+							<td colspan="9">Aucun membre</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<a href="{{ path('membre_new') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Ajouter</a>
+	</main>
+{% endblock %}

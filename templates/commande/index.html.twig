@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Commandes{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<h1 class="text-center mb-4 fw-semibold fs-2">Commandes</h1>
+		<div class="overflow-scroll">
+			<table class="table table-sm table-hover px-5">
+				<thead>
+					<tr class="table-danger text-center align-middle">
+						<th>#</th>
+						<th>Membre</th>
+						<th>Produit</th>
+						<th>Quantite</th>
+						<th>Montant</th>
+						<th>Etat</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for commande in commandes %}
+						<tr class="text-center align-middle">
+							<td>{{ commande.id }}</td>
+							<td>{{ commande.idMembre.id ~ ": " ~ commande.idMembre.pseudo }}</td>
+							<td>{{ commande.idProduit.id ~ ": " ~ commande.idProduit.titre ~ " (" ~ commande.idProduit.prix|deviseFr ~ "/pièce)" }}<br>
+								<img src="/upload{{ asset(commande.idProduit.photo) }}" alt="Photo du produit {{ commande.idProduit.description }}" class="img-fluid img-thumbnail" style="max-height: 150px;">
+							</td>
+							<td>{{ commande.quantite }}</td>
+							<td>{{ commande.montant|deviseFr }}</td>
+							<td>{{ commande.etat }}</td>
+							<td>
+								{% include 'commun/action.html.twig' with {'id': commande.id, 'show': 'commande_show', 'edit': 'commande_edit', 'delete': 'commande_delete'} %}
+							</td>
+						</tr>
+					{% else %}
+						<tr class="text-center align-middle">
+							<td colspan="7">Aucune commande</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<a href="{{ path('commande_new') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Ajouter</a>
+	</main>
+{% endblock %}

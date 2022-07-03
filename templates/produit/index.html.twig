@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Produits{% endblock %}
+
+{% block body %}
+	<main class="container-fluid">
+		<h1 class="text-center mb-4 fw-semibold fs-2">Produits</h1>
+		<div class="overflow-scroll">
+			<table class="table table-sm table-hover px-5">
+				<thead>
+					<tr class="table-danger text-center align-middle">
+						<th>#</th>
+						<th>Titre</th>
+						<th>Description</th>
+						<th>Couleur</th>
+						<th>Taille</th>
+						<th>Collection</th>
+						<th width="10%">Photo</th>
+						<th>Prix Unitaire</th>
+						<th>Stock</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for produit in produits %}
+						<tr class="text-center align-middle">
+							<td>{{ produit.id }}</td>
+							<td>{{ produit.titre }}</td>
+							<td>{{ produit.description }}</td>
+							<td style="background: {{ produit.couleur }};"></td>
+							<td>{{ produit.taille }}</td>
+							<td>{{ produit.collection|collection }}</td>
+							<td><img src="/upload{{ asset(produit.photo) }}" alt="Photo du produit {{ produit.description }}" class="img-fluid img-thumbnail"></td>
+							<td>{{ produit.prix|deviseFr }}</td>
+							<td>{{ produit.stock }}</td>
+							<td>
+								{% include 'commun/action.html.twig' with {'id': produit.id, 'show': 'produit_show', 'edit': 'produit_edit', 'delete': 'produit_delete'} %}
+							</td>
+						</tr>
+					{% else %}
+						<tr class="text-center align-middle">
+							<td colspan="10">Aucun produit</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<a href="{{ path('produit_new') }}" class="btn btn-outline-primary btn-sm float-end ms-3">Ajouter</a>
+	</main>
+{% endblock %}
